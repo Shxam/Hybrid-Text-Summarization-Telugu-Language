@@ -24,43 +24,43 @@ This project implements a **hybrid text summarization** approach for the **Telug
 ```bash
 git clone https://github.com/Shxam/Hybrid-Text-Summarization-Telugu-Language.git
 cd Hybrid-Text-Summarization-Telugu-Language
+
 📦 Setup Environment
-bash
-Copy
-Edit
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-🧠 Methodology
-📌 Extractive Summarization
-Algorithm: TextRank
 
-Input: Raw Telugu document
+🧠 Summarization Methodology
+🔸 Extractive: TextRank
+Graph-based sentence ranking
 
-Output: Ranked key sentences
+Outputs top-n sentences as a base for abstractive input
 
-📌 Abstractive Summarization
-Model: google/mt5-small
+🔸 Abstractive: Fine-Tuned mT5-small
+Input: Extractive summary or raw document
 
-Fine-tuned on extractive summaries and human-written targets
+Output: Abstracted, grammatically fluent summary
 
-Language: Telugu
+Techniques:
 
-Training: 5 epochs, batch size 10, max input length 512
+Seq2Seq transformer
 
-Tokenizer: mt5 tokenizer (supports multilingual text)
+Attention & coverage
 
-)
+Beam search decoding
 
-📊 ROUGE Evaluation
-Metric	Score
-ROUGE-1	0.4321
-ROUGE-2	0.3625
-ROUGE-L	0.4114
 
 💡 Fine-tuning with extractive summaries as input improved ROUGE scores by ~22% over baseline mT5 generation.
 
-.
+.📊 ROUGE Evaluation
+Metric	Precision	Recall	F1-Score
+ROUGE-1	0.5000	0.5000	0.5000
+ROUGE-2	0.0000	0.0000	0.0000
+ROUGE-L	0.5000	0.5000	0.5000
+
+📈 ROUGE-2 is low due to limited bigram overlap, but ROUGE-1 and ROUGE-L indicate that content coverage and structure were reasonably preserved.
+
+
 
 🧪 Sample Inference (Abstractive)
 from transformers import MT5ForConditionalGeneration, MT5Tokenizer
